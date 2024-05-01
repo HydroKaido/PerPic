@@ -1,12 +1,26 @@
 import { PORT, mongoDBURL } from './config.js';
+import cors from "cors"
 import express from "express";
 import mongoose from "mongoose";
 import artworkRoutes from "./routes/ArtworkRoute.js"
 
+
 const app = express();
+app.use(
+    cors({
+      origin: "http://localhost:5173",
+      methods: ["GET", "PUT", "POST", "DELETE"],
+      allowedHeaders: ["Content-Type"]
+    })
+  );
 
 app.use(express.json());
 app.use('/artwork', artworkRoutes);
+
+app.get("/", (request, response) => {
+    console.log(request);
+    return response.status(200).send("Welcome to Rice Field Bitch");
+  });
 
 mongoose.connect(mongoDBURL)
     .then(() => {
