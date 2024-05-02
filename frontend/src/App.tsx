@@ -1,39 +1,19 @@
 import './App.css'
-import { useEffect, useState } from 'react'
-import axios from 'axios';
-
-interface Artwork {
-  _id: string;
-  title: string;
-  description: string;
-  dateTime: string;
-}
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage/index';
+import ErrorPage from './pages/ErrorPage/index';
 
 function App() {
-  const [data, setData] = useState<Artwork[]>([]);
-  
-  useEffect(() => {
-    axios
-      .get<{ data: Artwork[] }>("http://localhost:5555/artwork")
-      .then((response) => {
-        setData(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <>
-      <div>
-        {data.map((artwork) => (
-          <div key={artwork._id}>
-            <h2>{artwork.title}</h2>
-            <p>{artwork.description}</p>
-            <p>{artwork.dateTime}</p>
-          </div>
-        ))}
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<HomePage/>}></Route>
+          <Route path="/" element={<HomePage/>}></Route>
+          <Route path='*' element={<ErrorPage/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
