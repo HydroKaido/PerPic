@@ -1,4 +1,3 @@
-import Layout from "../../layouts/Layout/index";
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 import Header from "../../components/Header/index";
 
@@ -17,9 +16,7 @@ const HomePage = () => {
 
             <div className="App">
             <Header/>
-                <ResponsiveMasonry
-                    columnsCountBreakPoints={{ 300: 2, 500: 3, 700: 4, 900: 5 }}
-                >
+                <ResponsiveMasonry columnsCountBreakPoints={{ 300: 2, 500: 3, 700: 4, 900: 5 }}>
                     <Masonry gutter="10px">{items}</Masonry>
                 </ResponsiveMasonry>
             </div>

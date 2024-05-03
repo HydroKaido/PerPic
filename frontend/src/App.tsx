@@ -1,8 +1,8 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage/index';
 import ErrorPage from './pages/ErrorPage/index';
-
+import HomePage from './pages/HomePage/index';
+import LoginPage from './pages/Auth/LoginPage/index';
 function App() {
 
   return (
@@ -12,6 +12,7 @@ function App() {
           <Route index element={<HomePage/>}></Route>
           <Route path="/" element={<HomePage/>}></Route>
           <Route path='*' element={<ErrorPage/>}></Route>
+          <Route path='/login' element={<LoginPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
@@ -19,3 +20,4 @@ function App() {
 }
 
 export default App;
+
