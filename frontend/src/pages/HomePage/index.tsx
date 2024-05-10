@@ -1,5 +1,6 @@
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 import Header from "../../components/Header/index";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     const items = Array.from({ length: 100 }).map((_, index) => (
@@ -16,6 +17,7 @@ const HomePage = () => {
 
             <div className="App">
             <Header/>
+            <Link to={'/artwork/create'}>adfasdfdsf</Link>
                 <ResponsiveMasonry columnsCountBreakPoints={{ 300: 2, 500: 3, 700: 4, 900: 5 }}>
                     <Masonry gutter="10px">{items}</Masonry>
                 </ResponsiveMasonry>
