@@ -32,9 +32,6 @@ router.get("/", async (req, res) => {
 router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { title, description, dateTime } = req.body;
-        if (!title || !description || !dateTime) {
-            return res.status(400).json({ error: "Title, description, and dateTime are required" });
-        }
         const newArtwork = await Artwork.create({
             title,
             description,
