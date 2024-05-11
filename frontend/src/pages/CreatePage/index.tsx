@@ -30,7 +30,7 @@ const MyForm = () => {
         }
         setLoading(true);
         try {
-            await axios.post("https://per-pic.vercel.app/artwork", formData);
+            await axios.post("https://per-pic-api.vercel.app/artwork", formData);
             setLoading(false);
             navigate("/");
         } catch (error) {
