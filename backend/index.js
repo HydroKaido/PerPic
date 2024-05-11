@@ -15,7 +15,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use('/artwork', artworkRoutes);
-
+app.use('/uploads', express.static('uploads'))
 app.get("/", (request, response) => {
     console.log(request);
     return response.status(200).send("Welcome to Rice Field Bitch");

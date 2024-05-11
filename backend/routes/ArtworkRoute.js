@@ -1,7 +1,19 @@
 import express from "express";
+import multer from "multer";
 import { Artwork } from "../models/ArtworkModel.js";
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
     try {
@@ -16,7 +28,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+
+router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { title, description, dateTime } = req.body;
         if (!title || !description || !dateTime) {
@@ -25,7 +38,8 @@ router.post('/', async (req, res) => {
         const newArtwork = await Artwork.create({
             title,
             description,
-            dateTime
+            dateTime,
+            image: req.file ? req.file.path : null
         });
         return res.status(200).json({ message: "Artwork created successfully", artwork: newArtwork });
     } catch (error) {
