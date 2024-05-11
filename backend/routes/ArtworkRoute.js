@@ -1,7 +1,19 @@
 import express from "express";
+import multer from "multer";
 import { Artwork } from "../models/ArtworkModel.js";
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
     try {
@@ -16,21 +28,20 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+
+router.post('/', upload.single('image'), async (req, res) => {
     try {
         const { title, description, dateTime } = req.body;
-
-        // Basic validation, you might want to add more as per your requirements
         if (!title || !description || !dateTime) {
             return res.status(400).json({ error: "Title, description, and dateTime are required" });
         }
-
         const newArtwork = await Artwork.create({
             title,
             description,
             dateTime,
+            image: req.file ? req.file.path : null
         });
-        return res.status(201).json({ message: "Artwork created successfully", artwork: newArtwork });
+        return res.status(200).json({ message: "Artwork created successfully", artwork: newArtwork });
     } catch (error) {
         console.error("Error creating artwork:", error);
         return res.status(500).json({ error: "Internal server error" });

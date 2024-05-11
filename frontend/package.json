@@ -16,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-masonry": "^1.0.7",
     "react-responsive-masonry": "^2.2.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "validate-image-type": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
