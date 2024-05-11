@@ -41,7 +41,7 @@ const HomePage = () => {
     const items = shuffledArtworks.map((artwork) => (
         <div key={artwork._id}>
             <img
-                src={`http://localhost:5555/${artwork.image}`}
+                src={`https://per-pic-api.vercel.app/${artwork.image}`}
                 alt={artwork.title}
                 style={{ width: "100%", borderRadius: "8px" }}
             />
