@@ -10,7 +10,8 @@ app.use(
     cors({
       origin: "https://per-pic-frontend.vercel.app",
       methods: ["GET", "PUT", "POST", "DELETE"],
-      allowedHeaders: ["Content-Type"]
+      allowedHeaders: ["Content-Type"],
+      credentials: true
     })
   );
 
