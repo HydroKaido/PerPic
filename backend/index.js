@@ -8,7 +8,7 @@ import artworkRoutes from "./routes/ArtworkRoute.js"
 const app = express();
 app.use(
     cors({
-      origin: "https://per-pic-frontend.vercel.app",
+      origin: "https://per-pic-frontend.vercel.app/",
       methods: ["GET", "PUT", "POST", "DELETE"],
       allowedHeaders: ["Content-Type"],
       credentials: true
