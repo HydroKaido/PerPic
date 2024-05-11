@@ -14,7 +14,7 @@ const MyForm = () => {
 
 
     const generateRandomName = (originalName: string) => {
-        const randomString = Date.now() + "_" + Math.random().toString(36).substring(2);
+        const randomString = Date.now() + "_" + Math.random().toString(36).substring(2, 8);
         const extension = originalName.split('.').pop();
         return `${randomString}.${extension}`;
     };
