@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Header from "../../components/Header/index";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ const HomePage = () => {
     useEffect(() => {
         async function fetchArtworks() {
             try {
-                const response = await axios.get<{ data: Artwork[] }>("http://localhost:5555/artwork");
+                const response = await axios.get<{ data: Artwork[] }>("https://per-pic.vercel.app/artwork");
                 setArtworks(response.data.data);
             } catch (error) {
                 console.error("Error fetching artworks:", error);
