@@ -41,7 +41,7 @@ router.post('/', upload.single('image'), async (req, res) => {
             dateTime,
             image: req.file ? req.file.path : null
         });
-        return res.status(200).json({ message: "Artwork created successfully", artwork: newArtwork });
+        return res.status(201).json({ message: "Artwork created successfully", artwork: newArtwork });
     } catch (error) {
         console.error("Error creating artwork:", error);
         return res.status(500).json({ error: "Internal server error" });
