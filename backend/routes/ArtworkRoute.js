@@ -1,8 +1,8 @@
 import express from "express";
 import { Artwork } from "../models/ArtworkModel.js";
+import { put } from "@vercel/blob";
 
 const router = express.Router();
-
 
 router.get("/", async (req, res) => {
     try {
@@ -17,32 +17,33 @@ router.get("/", async (req, res) => {
     }
 });
 
-
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-      if (
-        !req.body.title ||
-        !req.body.description ||
-        !req.body.dateTime
-      ) {
-        return res.status(201).send({
-          message: "Sending Loves to my homie the title, publish, and created",
-        });
-      }
-      const newArtwork = {
-        title: req.body.title,
-        description: req.body.description,
-        dateTime: req.body.dateTime,
-      };
-      const diary = await Artwork.create(newArtwork);
-      return res.status(200).send(diary);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).send({ message: error.message });
-    }
-  });
-  
+        const { title, description, dateTime } = req.body;
+        if (!title || !description || !dateTime) {
+            return res.status(400).json({ error: "Title, description, and dateTime are required" });
+        }
 
+        const { file } = req.body;
+        if (!file) {
+            return res.status(400).json({ error: "File is required" });
+        }
+        const putOptions = {
+            contentType: file.mimetype,
+        };
+        const { Key } = await put(process.env.BLOB_READ_WRITE_TOKEN, file.buffer, putOptions);
+        const newArtwork = await Artwork.create({
+            title,
+            description,
+            dateTime,
+            image: Key
+        });
+        return res.status(200).json({ message: "Artwork created successfully", artwork: newArtwork });
+    } catch (error) {
+        console.error("Error creating artwork:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
