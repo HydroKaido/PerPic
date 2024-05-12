@@ -14,7 +14,7 @@ const MyForm = () => {
 
 
     const generateRandomName = (originalName: string) => {
-        const randomString = Date.now() + "_" + Math.random().toString(36).substring(2, 8);
+        const randomString = Date.now() + "_" + Math.random().toString(36).substring(2,8);
         const extension = originalName.split('.').pop();
         return `${randomString}.${extension}`;
     };
@@ -30,7 +30,7 @@ const MyForm = () => {
         }
         setLoading(true);
         try {
-            await axios.post("https://per-pic-api.vercel.app/artwork", formData);
+            await axios.post("http://localhost:5555/artwork", formData);
             setLoading(false);
             navigate("/");
         } catch (error) {

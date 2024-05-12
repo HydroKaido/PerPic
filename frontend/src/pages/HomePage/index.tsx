@@ -18,7 +18,7 @@ const HomePage = () => {
     useEffect(() => {
         async function fetchArtworks() {
             try {
-                const response = await axios.get<{ data: Artwork[] }>("https://per-pic-api.vercel.app/artwork");
+                const response = await axios.get<{ data: Artwork[] }>("http://localhost:5555/artwork");
                 setArtworks(response.data.data);
             } catch (error) {
                 console.error("Error fetching artworks:", error);
