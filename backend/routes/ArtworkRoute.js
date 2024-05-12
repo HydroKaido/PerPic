@@ -1,19 +1,8 @@
 import express from "express";
-import multer from "multer";
 import { Artwork } from "../models/ArtworkModel.js";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage });
 
 router.get("/", async (req, res) => {
     try {
@@ -29,24 +18,30 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-        const { title, description, dateTime } = req.body;
-        if (!title || !description || !dateTime) {
-            return res.status(400).json({ error: "Title, description, and dateTime are required" });
-        }
-        const newArtwork = await Artwork.create({
-            title,
-            description,
-            dateTime,
-            image: req.file ? req.file.path : null
+      if (
+        !req.body.title ||
+        !req.body.description ||
+        !req.body.dateTime
+      ) {
+        return res.status(201).send({
+          message: "Sending Loves to my homie the title, publish, and created",
         });
-        return res.status(201).json({ message: "Artwork created successfully", artwork: newArtwork });
+      }
+      const newArtwork = {
+        title: req.body.title,
+        description: req.body.description,
+        dateTime: req.body.dateTime,
+      };
+      const diary = await Artwork.create(newArtwork);
+      return res.status(200).send(diary);
     } catch (error) {
-        console.error("Error creating artwork:", error);
-        return res.status(500).json({ error: "Internal server error" });
+      console.log(error.message);
+      res.status(500).send({ message: error.message });
     }
-});
+  });
+  
 
 router.get("/:id", async (req, res) => {
     try {
