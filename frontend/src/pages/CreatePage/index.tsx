@@ -2,7 +2,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
 import { useNavigate } from "react-router-dom";
-import { FormEvent } from 'react';
 
 const MyForm = () => {
     const [title, setTitle] = useState("");
@@ -12,21 +11,13 @@ const MyForm = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-
-    const generateRandomName = (originalName: string) => {
-        const randomString = Date.now() + "_" + Math.random().toString(36).substring(2,8);
-        const extension = originalName.split('.').pop();
-        return `${randomString}.${extension}`;
-    };
-    const handleSaveDiary = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSaveDiary = async () => {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
         formData.append("dateTime", dateTime);
         if (image) {
-            const randomImageName = generateRandomName(image.name);
-            formData.append("image", image, randomImageName);
+            formData.append("image", image);
         }
         setLoading(true);
         try {
