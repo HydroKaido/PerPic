@@ -27,26 +27,26 @@ const Signup = () => {
         setRegister(prev  => ({...prev, [e.target.name]: e.target.value}))
     }
 
+
+    //still have bugs adding a already exist email
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await axios.post("http://localhost:5555/register", register);
             setLoading(false);
             navigate('/login');
-            
+            toast.success("Wow so easy!");
         }catch(err){
             setLoading(false);
             console.log(err)
         }
         console.log(register);
     }
-    const notify =() => {
-        toast("Wow so easy!");
-    }
     return ( <>
 
     {
         loading ? (<Spinner/>) : (
+            
             <div className="h-full w-full bg-slate-200/85">
             <div className=" h-[100vh] flex justify-center items-center">
                 <div className="bg-white/90 rounded shadow-lg">
@@ -63,7 +63,6 @@ const Signup = () => {
                         
                     </div>
                     </form>
-                    <button onClick={notify}>asdfadsfasf</button>
                 </div>
             </div>
         </div>

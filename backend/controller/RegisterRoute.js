@@ -10,6 +10,10 @@ router.post("/", async (req, res) => {
         if(!email || !username || !password){
             return res.status(400).json('username, email and password is required');
         }
+        const emailExist = await Register.findOne({email});
+        if(emailExist){
+            res.status(400).json("Email is already exist")
+        }
         const hashpassword = await bcrypt.hash(password, 10);
         const register = await Register.create({
             email, username, password:hashpassword
