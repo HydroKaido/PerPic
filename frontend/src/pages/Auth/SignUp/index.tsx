@@ -27,18 +27,28 @@ const Signup = () => {
         setRegister(prev  => ({...prev, [e.target.name]: e.target.value}))
     }
 
-
-    //still have bugs adding a already exist email
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5555/register", register);
+            const response = await axios.post("http://localhost:5555/register", register);
+            if (response.data.error){
+                toast.error(response.data.error)
+            }else {
+                setLoading(false);
+                navigate('/login');
+                toast.success("Wow so easy!");
+            }
+
+        }catch (error) {
             setLoading(false);
-            navigate('/login');
-            toast.success("Wow so easy!");
-        }catch(err){
-            setLoading(false);
-            console.log(err)
+            //StockOverflow link error (fix) https://stackoverflow.com/questions/74882077/react-native-expo-how-to-see-axios-error-full-message
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data.error);
+            } else {
+                console.error(error);
+                toast.error("An unexpected error occurred");
+            }
+            throw new Error("Request failed");
         }
         console.log(register);
     }
@@ -56,9 +66,9 @@ const Signup = () => {
                         <h2 >Username</h2>
                         <input type="text" name="username" className="border-2" value={register.username} onChange={handleRegister}/>
                         <h2>Email</h2>
-                        <input type="text" name="email" className="border-2" value={register.email} onChange={handleRegister}/>
+                        <input type="gmail" name="email" className="border-2" value={register.email} onChange={handleRegister}/>
                         <h2>Password</h2>
-                        <input type="text" name="password" className="border-2" value={register.password} onChange={handleRegister}/>
+                        <input type="password" name="password" className="border-2" value={register.password} onChange={handleRegister}/>
                         <button type="submit">Submit</button>
                         
                     </div>
