@@ -11,15 +11,19 @@
   },
   "dependencies": {
     "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-masonry": "^1.0.7",
     "react-responsive-masonry": "^2.2.0",
     "react-router-dom": "^6.23.0",
+    "react-toastify": "^10.0.5",
     "validate-image-type": "^3.0.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-responsive-masonry": "^2.1.3",

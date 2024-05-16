@@ -10,9 +10,9 @@ const LoginPage = () => {
                     <div className="w-96 h-64 flex justify-center items-center flex-col">
                         <h2>Login</h2>
                         <h2 >Email</h2>
-                        <input type="text" value="email" className="border-2"/>
+                        <input type="text"  className="border-2"/>
                         <h2>Password</h2>
-                        <input type="text" value="password" className="border-2"/>
+                        <input type="text"  className="border-2"/>
                         <button type="submit">Submit</button>
                         <div className="mt-10">
                             <Link to={'/register'}>Dont have an account</Link>

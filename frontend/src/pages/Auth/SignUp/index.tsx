@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Spinner from "../../../components/Spinner";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Register{
     username: string,
@@ -30,12 +32,16 @@ const Signup = () => {
         try {
             await axios.post("http://localhost:5555/register", register);
             setLoading(false);
-            navigate('/');
+            navigate('/login');
+            
         }catch(err){
             setLoading(false);
             console.log(err)
         }
         console.log(register);
+    }
+    const notify =() => {
+        toast("Wow so easy!");
     }
     return ( <>
 
@@ -57,6 +63,7 @@ const Signup = () => {
                         
                     </div>
                     </form>
+                    <button onClick={notify}>asdfadsfasf</button>
                 </div>
             </div>
         </div>
