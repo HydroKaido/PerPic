@@ -7,12 +7,14 @@ import authController from "./controller/authController.js"
 
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'PUT', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-}));
+const corsOptions = {
+  origin: 'http://localhost:5173',  // Frontend URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Authorization,Origin,X-Requested-With,Content-Type,Accept',
+};
+
+// Use CORS middleware
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use('/', authController);

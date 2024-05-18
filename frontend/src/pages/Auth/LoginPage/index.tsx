@@ -25,7 +25,7 @@ const LoginPage = () => {
             if(response.data.error){
                 alert(response.data.error);
             }else{
-                navigate('/dashboard');
+                navigate('/');
                 toast.success("Login Successfully")
                 localStorage.setItem("token", response.data.token);
             }

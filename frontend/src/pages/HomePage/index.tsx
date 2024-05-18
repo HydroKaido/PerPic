@@ -14,11 +14,16 @@ interface Artwork {
 
 const HomePage = () => {
     const [artworks, setArtworks] = useState<Artwork[]>([]);
-
+    const token = localStorage.getItem("token")
     useEffect(() => {
         async function fetchArtworks() {
             try {
-                const response = await axios.get("http://localhost:5555/artwork");
+                const response = await axios.get("http://localhost:5555/artwork", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                
                 const shuffledArtworks = shuffleArray(response.data.data);
                 setArtworks(shuffledArtworks);
             } catch (error) {
@@ -27,7 +32,7 @@ const HomePage = () => {
         }
 
         fetchArtworks();
-    }, []);
+    }, [token]);
     
     //Shuffle Array link https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     const shuffleArray = (array: any[]) => {

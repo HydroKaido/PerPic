@@ -1,6 +1,8 @@
 import express from "express";
 import multer from "multer";
+import path from "path";
 import { Artwork } from "../models/ArtworkModel.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -9,15 +11,16 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
     }
 });
 
 const upload = multer({ storage: storage });
 
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
     try {
-        const artwork = await Artwork.find({});
+        const userId = req.user.id;
+        const artwork = await Artwork.find({userId: req.user.id});
         return res.status(200).json({
             count: artwork.length,
             data: artwork,
@@ -29,8 +32,9 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', authenticateToken, upload.single('image'), async (req, res) => {
     try {
+        const userId = req.user.id;
         const { title, description, dateTime } = req.body;
         if (!title || !description || !dateTime) {
             return res.status(400).json({ error: "Title, description, and dateTime are required" });
@@ -39,7 +43,8 @@ router.post('/', upload.single('image'), async (req, res) => {
             title,
             description,
             dateTime,
-            image: req.file ? req.file.path : null
+            image: req.file ? req.file.path : null,
+            userId: req.user.id
         });
         return res.status(201).json({ message: "Artwork created successfully", artwork: newArtwork });
     } catch (error) {
@@ -47,6 +52,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 router.get("/:id", async (req, res) => {
     try {

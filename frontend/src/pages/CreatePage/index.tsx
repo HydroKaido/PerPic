@@ -11,7 +11,9 @@ const MyForm = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSaveDiary = async () => {
+    const handleSaveDiary = async (e: React.FormEvent) => {
+        e.preventDefault();  // Prevent default form submission behavior
+
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
@@ -21,7 +23,11 @@ const MyForm = () => {
         }
         setLoading(true);
         try {
-            await axios.post("http://localhost:5555/artwork", formData);
+            await axios.post("http://localhost:5555/artwork", formData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`  // Add authorization header if required
+                }
+            });
             setLoading(false);
             navigate("/");
         } catch (error) {
@@ -41,13 +47,13 @@ const MyForm = () => {
         <div>
             {
                 loading ? (
-                    <Spinner/>
+                    <Spinner />
                 ) : (
                     <form onSubmit={handleSaveDiary}>
-                        <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className='border'/>
-                        <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='border'/>
-                        <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border'/>
-                        <input type="file" accept="image/*" onChange={handleImageChange} className='border' required/>
+                        <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className='border' required />
+                        <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='border' required />
+                        <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border' required />
+                        <input type="file" accept="image/*" onChange={handleImageChange} className='border' required />
                         <button type="submit">Submit</button>
                     </form>
                 )

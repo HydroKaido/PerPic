@@ -16,6 +16,10 @@ const ArtworkSchema = mongoose.Schema(
         },
         image: {
             type: String,
+            
+        },
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
             required: true
         }
         
