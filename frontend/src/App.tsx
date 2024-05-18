@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage/index';
 import LoginPage from './pages/Auth/LoginPage/index';
 import MyForm from './pages/CreatePage';
 import Signup from './pages/Auth/SignUp';
+import Dashboard from './pages/Dashboard';
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/login' element={<LoginPage/>}></Route>
           <Route path='/artwork/create' element={<MyForm/>}/>
           <Route path='/register' element={<Signup/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

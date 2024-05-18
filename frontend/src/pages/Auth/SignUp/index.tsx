@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Spinner from "../../../components/Spinner";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 interface Register{
     username: string,
