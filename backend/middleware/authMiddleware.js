@@ -12,15 +12,18 @@ function authenticateToken( req, res, next){
     if(bearer !== "Bearer" || !token){
         return res.status(401).json({message: "Unauthorized: Invalid token format"})
     }
-
-    jwt.verify(token, secretkey, (err, decoded) => {
+    jwt.verify(token, secretkey, (err, user) => {
         if(err){
             return res.status(402).json({message: "Unauthorized: Invalid token"})
         }
-        req.user = decoded;
+        req.user = user;
         next()
     })
     
 }
 
-export {authenticateToken}
+function verifyToken(token){
+    return jwt.verify(token, secretkey)
+}
+
+export {authenticateToken, verifyToken}

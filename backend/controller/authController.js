@@ -2,6 +2,7 @@ import express from "express";
 import { User } from '../models/UserModel.js'
 import bcrypt from 'bcrypt'
 import { generateToken } from "../utils/jwtUtils.js";
+import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -51,6 +52,27 @@ router.post("/login", async (req, res) => {
         }
     } catch (err) {
         console.error("Error logging in user:", err);
+        return res.status(500).json('Internal Server Error');
+    }
+});
+
+
+router.post('/refresh-token', async (req, res) => {
+    try {
+        const { token } = req.body;
+        if (!token) {
+            return res.status(400).json({ error: 'Token is required' });
+        }
+        const decodedToken = verifyToken(token);
+        const user = await User.findById(decodedToken.id);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        const newToken = generateToken(user);
+        return res.status(200).json({ newToken });
+    } catch (error) {
+        console.error("Error refreshing token:", error);
         return res.status(500).json('Internal Server Error');
     }
 });
