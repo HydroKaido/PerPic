@@ -62,30 +62,42 @@ const CreatePage = () => {
                 loading ? (
                     <Spinner />
                 ) : (
-                    <form onSubmit={handleSaveDiary}>
-                        <div>
-                            
-                        </div>
-                        <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className='border' required />
-                        <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='border' required />
-                        <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border' required />
-                        <div {...getRootProps({ className: 'dropzone' })} className="border p-4">
-                            <input {...getInputProps()} />
-                            {
-                                !image ? (
-                                    <>
-                                    {isDragAccept && (<p>This file is Accepted</p>)}
-                                    {isDragReject && (<p>This is not a Image</p>)}
-                                    {!isDragActive && (<p>Drop some files here ...</p>)}
-                                    </>
-                                    
-                                ):(
-                                    <img src={URL.createObjectURL(image)} alt="uploaded image" className="h-40 w-auto" />
-                                )
-                            }
+                    <>
+                    <div className='flex justify-between mx-10'>
+                        <h2>Create Pin</h2>
+                        <button type="submit" className='bg-blue-500 px-8 py-2 rounded-full text-white' disabled={!image}>Submit</button>
+                    </div>
+                        <form onSubmit={handleSaveDiary}>
+                            <div className='grid lg:grid-cols-2 lg:space-x-10 mx-10'>
+                                <div>
+                                    <div {...getRootProps({ className: 'dropzone' })} className="border-2 p-4 rounded border-dashed h-full bg-gray-100 ">
+                                        <input {...getInputProps()} />
+                                        {
+                                            !image ? (
+                                                <>
+                                                {isDragAccept && (<p className='text-white/40'>This file is Accepted</p>)}
+                                                {isDragReject && (<p className='text-white'>This is not a Image</p>)}
+                                                {!isDragActive && (<p className='text-gray-500 text-center'>Drop some files here ...</p>)}
+                                                </>
+                                                
+                                            ):(
+                                                <img src={URL.createObjectURL(image)} alt="uploaded image" className="h-40 w-auto" />
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                <div className='flex flex-col'>
+                                    <label>Title</label>
+                                    <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className='border rounded h-10' required disabled={!image}/>
+                                    <label>Description</label>
+                                    <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='border rounded h-10' required disabled={!image}/>
+                                    <label>Link</label>
+                                    <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border rounded h-10' required disabled={!image}/>
+                                </div>
                             </div>
-                        <button type="submit">Submit</button>
-                    </form>
+                        </form>
+                    </>
+                    
                 )
             }
         </div>

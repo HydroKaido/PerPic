@@ -38,7 +38,7 @@ const HomePage = () => {
             }
         }
         fetchArtworks();
-    }, [token]);
+    }, [token, navigate]);
     
     //Shuffle Array link https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     const shuffleArray = (array: any[]) => {
