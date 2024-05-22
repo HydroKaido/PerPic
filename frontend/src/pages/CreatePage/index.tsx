@@ -2,8 +2,11 @@ import { useState } from 'react';
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
 import { useNavigate } from "react-router-dom";
+import {useDropzone} from 'react-dropzone'
 
-const MyForm = () => {
+
+
+const CreatePage = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dateTime, setDatetime] = useState("");
@@ -12,7 +15,7 @@ const MyForm = () => {
     const navigate = useNavigate();
 
     const handleSaveDiary = async (e: React.FormEvent) => {
-        e.preventDefault();  // Prevent default form submission behavior
+        e.preventDefault();
 
         const formData = new FormData();
         formData.append("title", title);
@@ -25,7 +28,7 @@ const MyForm = () => {
         try {
             await axios.post("http://localhost:5555/artwork", formData, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`  // Add authorization header if required
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
             setLoading(false);
@@ -36,12 +39,22 @@ const MyForm = () => {
             console.log(error);
         }
     };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setImage(e.target.files[0]);
+    
+    const onDrop = (acceptedFiles: File[]) => {
+        if (acceptedFiles.length > 0) {
+            setImage(acceptedFiles[0]);
         }
     };
+
+    const {getRootProps,
+        getInputProps,
+        isDragActive,
+        isDragAccept,
+        isDragReject
+    } = useDropzone({onDrop,
+        accept: {'image/*': []}
+    })
+
 
     return (
         <div>
@@ -50,10 +63,27 @@ const MyForm = () => {
                     <Spinner />
                 ) : (
                     <form onSubmit={handleSaveDiary}>
+                        <div>
+                            
+                        </div>
                         <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className='border' required />
                         <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className='border' required />
                         <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border' required />
-                        <input type="file" accept="image/*" onChange={handleImageChange} className='border' required />
+                        <div {...getRootProps({ className: 'dropzone' })} className="border p-4">
+                            <input {...getInputProps()} />
+                            {
+                                !image ? (
+                                    <>
+                                    {isDragAccept && (<p>This file is Accepted</p>)}
+                                    {isDragReject && (<p>This is not a Image</p>)}
+                                    {!isDragActive && (<p>Drop some files here ...</p>)}
+                                    </>
+                                    
+                                ):(
+                                    <img src={URL.createObjectURL(image)} alt="uploaded image" className="h-40 w-auto" />
+                                )
+                            }
+                            </div>
                         <button type="submit">Submit</button>
                     </form>
                 )
@@ -62,4 +92,4 @@ const MyForm = () => {
     );
 };
 
-export default MyForm;
+export default CreatePage;

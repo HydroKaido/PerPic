@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage/index';
 import HomePage from './pages/HomePage/index';
 import LoginPage from './pages/Auth/LoginPage/index';
-import MyForm from './pages/CreatePage';
+import CreatePage from './pages/CreatePage';
 import Signup from './pages/Auth/SignUp';
 import Dashboard from './pages/Dashboard';
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="/home" element={<HomePage/>}></Route>
           <Route path='*' element={<ErrorPage/>}></Route>
           <Route path='/login' element={<LoginPage/>}></Route>
-          <Route path='/artwork/create' element={<MyForm/>}/>
+          <Route path='/h/create' element={<CreatePage/>}/>
           <Route path='/register' element={<Signup/>}/>
           <Route path='/dashboard' element={<Dashboard/>}></Route>
         </Routes>

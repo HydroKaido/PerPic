@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Header from "../../components/Header/index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 interface Artwork {
@@ -14,11 +14,12 @@ interface Artwork {
 
 const HomePage = () => {
     const [artworks, setArtworks] = useState<Artwork[]>([]);
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate()
     useEffect(() => {
         async function fetchArtworks() {
             try {
-                const response = await axios.get("http://localhost:5555/artwork", {
+                const response = await axios.get("http://localhost:5555/artwork/all", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
@@ -27,10 +28,15 @@ const HomePage = () => {
                 const shuffledArtworks = shuffleArray(response.data.data);
                 setArtworks(shuffledArtworks);
             } catch (error) {
-                console.error("No displaying data", error);
+                if (axios.isAxiosError(error) && error.response?.status === 401) {
+                    alert("Your session has expired. Please log in again.");
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                } else {
+                    console.error("No displaying data", error);
+                }
             }
         }
-
         fetchArtworks();
     }, [token]);
     

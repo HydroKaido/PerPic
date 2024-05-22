@@ -27,6 +27,9 @@ export const Header = () => {
                     <h2 className="ms-3">
                         Home
                     </h2>
+                    <div className="ms-3">
+                        <Link to={'/h/create'}>Create</Link>
+                    </div>
                 </div>
                 <div >
                     <input type="text"  className="rounded-full w-70 px-4 md:w-96 md:px-8 py-1 focus:outline-none bg-gray-100" placeholder="Search" required/>
