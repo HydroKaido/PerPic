@@ -20,10 +20,11 @@ const upload = multer({ storage: storage });
 router.get("/user", authenticateToken, async (req, res) => {
     try {
         const userId = req.user.id;
-        const artwork = await Artwork.find({userId: req.user.id});
+        const artworks = await Artwork.find({ userId });
+        const user = { id: userId, email: req.user.email };
         return res.status(200).json({
-            count: artwork.length,
-            data: artwork,
+            user,
+            artworks,
         });
     } catch (error) {
         console.log(error.message);

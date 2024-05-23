@@ -7,7 +7,7 @@ const Layout = (props: Props) => {
     return ( 
         <>
         <Header/>
-        <div className="bg-black">{props.children}</div>
+        <div>{props.children}</div>
         </>
      );
 }

@@ -56,7 +56,6 @@ const HomePage = () => {
         <>
             <div className="App">
                 <Header />
-                <Link to={"/artwork/create"}>Add Artwork</Link>
                 <ResponsiveMasonry columnsCountBreakPoints={{ 300: 2, 500: 3, 700: 4, 900: 5 }}>
                     <Masonry gutter="10px">
                         {artworks.map((artwork) => (
