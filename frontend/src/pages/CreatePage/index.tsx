@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {useDropzone} from 'react-dropzone'
 import Layout from '../../layouts/Layout';
 
-
-
 const CreatePage = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
