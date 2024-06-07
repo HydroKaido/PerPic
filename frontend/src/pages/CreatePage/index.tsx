@@ -109,19 +109,8 @@ const CreatePage = () => {
                                     <textarea name="description" rows={3}  value={description} onChange={(e) => setDescription(e.target.value)} className='border rounded mb-4 resize-none' required disabled={!image}/>
                                     <label className={!image ? 'text-gray-300' : 'text-gray-700'}>Link</label>
                                     <input type="text" name="dateTime" value={dateTime} onChange={(e) => setDatetime(e.target.value)} className='border rounded h-10 mb-4' required disabled={!image}/>
-                                    {/* <label className={!image ? 'text-gray-300' : 'text-gray-700'}>Tag</label>
-                                    <select name="" id="" className='border rounded h-10' required disabled={!image}>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                        <option value="" className='border rounded h-10'>Artwork</option>
-                                    </select> */}
                                 </div>
                             </div>
-                        
                     </div>
                     </form>
                     </>

@@ -12,7 +12,7 @@ export const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate('/');
+        navigate('/login');
         setShowModal(false);
     };
 

@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
         if (match) {
             const token = generateToken(user);
             console.log({token})
-            return res.status(200).json({ success: 'Password is a match', token });
+            return res.status(200).json({ success: 'Password is a match', token, email: user.email });
         } else {
             return res.status(400).json({ error: 'Password does not match' });
         }
