@@ -6,6 +6,7 @@ import LoginPage from './pages/Auth/LoginPage/index';
 import CreatePage from './pages/CreatePage';
 import Signup from './pages/Auth/SignUp';
 import Dashboard from './pages/Dashboard';
+import SinglePage from './pages/SinglePage';
 
 
 
@@ -17,7 +18,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage/>}></Route>
-          <Route path="/home" element={<HomePage/>}></Route>
+          <Route path="/" element={<HomePage/>}></Route>
+          <Route path="/:id" element={<SinglePage/>}></Route>
           <Route path='*' element={<ErrorPage/>}></Route>
           <Route path='/login' element={<LoginPage/>}></Route>
           <Route path='/h/create' element={<CreatePage/>}/>

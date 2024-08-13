@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
         if (match) {
             const token = generateToken(user);
             console.log({token})
-            return res.status(200).json({ success: 'Password is a match', token, email: user.email });
+            return res.status(200).json({ success: 'Password is a match', token, email: user.email, username: user.username });
         } else {
             return res.status(400).json({ error: 'Password does not match' });
         }
@@ -65,7 +65,6 @@ router.post('/refresh-token', async (req, res) => {
         }
         const decodedToken = verifyToken(token);
         const user = await User.findById(decodedToken.id);
-        
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }

@@ -30,12 +30,10 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5555/login", login);
-
       if (response.data.error) {
         alert(response.data.error);
       } else {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("email", response.data.email);
         navigate("/");
         toast.success("Login Successfully");
       }

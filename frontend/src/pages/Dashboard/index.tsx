@@ -10,11 +10,10 @@ const Dashboard = () => {
         if (!token) {
             navigate('/login');
         } else {
-            const storedEmail = localStorage.getItem("email");
+            const storedEmail = localStorage.getItem("token");
             setEmail(storedEmail);
         }
     }, [token, navigate]);
-
     return ( 
         <div>
             <h1>Dashboard</h1>

@@ -3,7 +3,6 @@ import { secretkey } from "../configuration/jwtConfig.js";
 
 function authenticateToken(req, res, next) {
     const authHeader = req.header("Authorization");
-
     if (!authHeader) {
         return res.status(400).json({ message: "Unauthorized: Missing token!" });
     }

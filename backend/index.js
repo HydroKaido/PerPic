@@ -1,10 +1,12 @@
-import { PORT, mongoDBURL } from './config.js';
 import cors from "cors"
 import express from "express";
 import mongoose from "mongoose";
 import artworkRoutes from "./controller/ArtworkRoute.js";
 import authController from "./controller/authController.js"
+import dotenv from 'dotenv';
 
+dotenv.config();
+const PORT = process.env.PORT
 
 const app = express();
 const corsOptions = {
@@ -27,7 +29,7 @@ app.get("/", (request, response) => {
     return response.status(200).send("Welcome to Rice Field Bitch");
   });
 
-mongoose.connect(mongoDBURL)
+mongoose.connect(process.env.mongoDBURL)
     .then(() => {
         console.log('Connected to MongoDB');
         app.listen(PORT, () => {

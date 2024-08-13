@@ -15,7 +15,6 @@ const CreatePage = () => {
 
     const handleSaveDiary = async (e: React.FormEvent) => {
         e.preventDefault();
-
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
@@ -44,7 +43,6 @@ const CreatePage = () => {
             setImage(acceptedFiles[0]);
         }
     };
-
     const {getRootProps,
         getInputProps,
         isDragActive,
@@ -53,8 +51,6 @@ const CreatePage = () => {
     } = useDropzone({onDrop,
         accept: {'image/*': []}
     })
-
-
     return (
         <Layout>
         <div>

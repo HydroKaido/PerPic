@@ -24,7 +24,6 @@ const HomePage = () => {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                
                 const shuffledArtworks = shuffleArray(response.data.data);
                 setArtworks(shuffledArtworks);
             } catch (error) {
@@ -39,7 +38,6 @@ const HomePage = () => {
         }
         fetchArtworks();
     }, [token, navigate]);
-    
     //Shuffle Array link https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     const shuffleArray = (array: any[]) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -48,10 +46,6 @@ const HomePage = () => {
         }
         return array;
     };
-
-    
- 
-
     return (
         <>
             <div className="App">
@@ -60,11 +54,13 @@ const HomePage = () => {
                     <Masonry gutter="10px">
                         {artworks.map((artwork) => (
                             <div key={artwork._id}>
+                                <Link to={`/${artwork._id}`}>
                                 <img
                                     src={`http://localhost:5555/${artwork.image}`}
                                     alt={artwork.title}
                                     style={{ width: "100%", borderRadius: "8px" }}
                                 />
+                                </Link>
                             </div>
                         ))}</Masonry>
                 </ResponsiveMasonry>

@@ -3,6 +3,8 @@ import multer from "multer";
 import path from "path";
 import { Artwork } from "../models/ArtworkModel.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
+import { User } from "../models/UserModel.js";
+import { generateToken } from "../utils/jwtUtils.js";
 
 const router = express.Router();
 
@@ -32,6 +34,20 @@ router.get("/user", authenticateToken, async (req, res) => {
     }
 });
 
+router.put("/dashboard/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateUser = await User.findByIdAndUpdate(id, req.body, {new: true});
+        if (!updateUser) {
+            return res.status(404).json({ message: "Users cannot update" });
+        }
+        const newToken = generateToken(updateUser);
+        return res.status(200).json({message: 'Update User', token: newToken})
+    } catch(error) {
+        console.log(error.message)
+    }
+})
+
 router.get("/all", async (req, res) => {
     try {
         const artwork = await Artwork.find({});
@@ -60,7 +76,7 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
             image: req.file ? req.file.path : null,
             userId: req.user.id
         });
-        return res.status(201).json({ message: "Artwork created successfully", artwork: newArtwork });
+        return res.status(200).json({ message: "Artwork created successfully", artwork: newArtwork });
     } catch (error) {
         console.error("Error creating artwork:", error);
         return res.status(500).json({ error: "Internal server error" });
@@ -68,18 +84,27 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
 });
 
 
-router.get("/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const artworkId = await Artwork.findById(id);
-        if (!artworkId) {
-            return res.status(404).json({ message: "Artwork not found" });
-        }
-        return res.status(200).json(artworkId);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ error: error.message });
+router.get("/update-profile", authenticateToken, async (req, res) => {
+    const { username, email } = req.body;
+
+  try {
+    const user = await User.findById(req.user.id);
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
+    user.username = username || user.username;
+    user.email = email || user.email;
+    await user.save();
+    res.json({
+      success: true,
+      username: user.username,
+      email: user.email,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 router.delete("/:id", async (req, res) => {
