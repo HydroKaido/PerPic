@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Spinner from "../../../components/Spinner";
 import { toast } from "react-toastify";
@@ -16,8 +16,9 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegister((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -25,31 +26,24 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5555/register",
-        register
-      );
-      if (response.data.error) {
-        toast.error(response.data.error);
-      } else {
-        setLoading(false);
-        navigate("/login");
-        toast.success("Wow so easy!");
-      }
-    } catch (error) {
-      setLoading(false);
-      //StockOverflow link error (fix) https://stackoverflow.com/questions/74882077/react-native-expo-how-to-see-axios-error-full-message
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data.error);
-      } else {
-        console.error(error);
-        toast.error("An unexpected error occurred");
-      }
-      throw new Error("Request failed");
-    }
-    console.log(register);
+    setLoading(true);
+    await axios
+      .post("http://localhost:5555/register", register)
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/login");
+          setLoading(false);
+          toast.success(response.data.message)
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          setLoading(false);
+          setError(error.response.data.error);
+        };
+      });
   };
+
   return (
     <>
       {loading ? (
@@ -89,6 +83,15 @@ const Signup = () => {
                     onChange={handleRegister}
                   />
                 </div>
+                <div className="text-red-500">
+                    {(!register.password ||
+                      (register.password.length < 8 && (
+                        <div>
+                          Password must be at least 8 characters long
+                        </div>) ||
+                        (error)
+                      ))}
+                  </div>
                 <button
                   type="submit"
                   className={`text-white bg-[#0059ff] w-full py-3 rounded font-bold `}

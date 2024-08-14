@@ -7,9 +7,7 @@ export const Header = () => {
     const [showModal, setShowModal] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
-
     const token = localStorage.getItem("token");
-
     const handleLogout = () => {
         localStorage.removeItem("token");
         navigate('/login');

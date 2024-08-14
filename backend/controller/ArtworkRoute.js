@@ -61,10 +61,19 @@ router.get("/all", async (req, res) => {
     }
 });
 
+router.post('/user', authenticateToken, async(req, res) => {
+    try {
+        const userID = req.user.id;
+        const user = await user.findById({userID});
+    } catch (error) {
+        return res.status(500).json({message: 'Error'});
+    }
+})
 
 router.post('/', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const userId = req.user.id;
+        const user = await user.findById({userId})
         const { title, description, dateTime } = req.body;
         if (!title || !description || !dateTime) {
             return res.status(400).json({ error: "Title, description, and dateTime are required" });
@@ -84,27 +93,18 @@ router.post('/', authenticateToken, upload.single('image'), async (req, res) => 
 });
 
 
-router.get("/update-profile", authenticateToken, async (req, res) => {
-    const { username, email } = req.body;
-
-  try {
-    const user = await User.findById(req.user.id);
-    
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const artworkId = await Artwork.findById(id);
+        if (!artworkId) {
+            return res.status(404).json({ message: "Artwork not found" });
+        }
+        return res.status(200).json(artworkId);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: error.message });
     }
-    user.username = username || user.username;
-    user.email = email || user.email;
-    await user.save();
-    res.json({
-      success: true,
-      username: user.username,
-      email: user.email,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
 });
 
 router.delete("/:id", async (req, res) => {

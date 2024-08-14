@@ -7,33 +7,26 @@ interface Artwork {
 }
 
 function SinglePage() {
-  const [artworks, setArtworks] = useState<Artwork | null>(null);
+  const [artwork, setArtwork] = useState<Artwork | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
-    async function fetchArtwork() {
-      try {
-        const res = await axios.get(`http://localhost:5555/artwork/${id}`);
-        setArtworks(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    if (id) {
-      fetchArtwork();
-    }
+        axios.get(`http://localhost:5555/artwork/${id}`).then((response) => {
+          if(response.status === 200){
+            setArtwork(response.data);
+          }
+        })
   }, [id]);
 
-  if (!artworks) {
+  if (!artwork) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <img
-        src={`http://localhost:5555/${artworks.image}`}
-        alt=""
+        src={`http://localhost:5555/${artwork.image}`}
+        alt="Artwork"
         className="h-40 w-40"
       />
     </div>
