@@ -1,4 +1,1 @@
 .env
-utils/apikey.json
-controller/credentials.json
-node_modules
