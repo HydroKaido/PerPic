@@ -1,34 +1,33 @@
 import jwt from "jsonwebtoken";
-import { secretkey } from "../configuration/jwtConfig.js";
+import { secretkey } from "../utils/jwtUtils.js";
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.header("Authorization");
-
-    if (!authHeader) {
-        return res.status(400).json({ message: "Unauthorized: Missing token!" });
+const authenticateToken = (req, res, next) => {
+    //Header need to be authorization to identify if the header
+    const authHeader = req.header('Authorization');
+    //if no authorization created
+    if(!authHeader){
+        return res.status(401).json({message: 'Missing Token please provide!'});
     }
-
+    //seperate the bearer<token> to bearer <token>
     const [bearer, token] = authHeader.split(" ");
-
-    if (bearer !== "Bearer" || !token) {
-        return res.status(401).json({ message: "Unauthorized: Invalid token format" });
+    //authentication if the token is not Bearer and then no token
+    if(bearer !== 'Bearer' || !token){
+        return res.status(401).json({message: 'Invalid format token'});
     }
-
     jwt.verify(token, secretkey, (err, user) => {
-        if (err) {
-            if (err.name === 'TokenExpiredError') {
-                return res.status(401).json({ message: "Unauthorized: Token has expired" });
-            }
-            return res.status(401).json({ message: "Unauthorized: Invalid token" });
+        //display invalid token
+        if(err){
+            return res.status(401).json({message: 'Invalid token'})
         }
-
-        req.user = user;
+        // Add the decoded information to the request object
+        req.user = user
+        //goes to next middleware
         next();
-    });
+    })
 }
 
-function verifyToken(token) {
-    return jwt.verify(token, secretkey);
+const verification = (token, secretkey) => {
+    return jwt.verify(token, secretkey)
 }
 
-export { authenticateToken, verifyToken };
+export {authenticateToken, verification}
