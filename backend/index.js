@@ -10,7 +10,7 @@ const PORT = process.env.PORT
 
 const app = express();
 const corsOptions = {
-  origin: 'http://localhost:5173',  // Frontend URL
+  origin: 'https://per-pic-frontend.vercel.app/',  // Frontend URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Authorization,Origin,X-Requested-With,Content-Type,Accept',
 };
