@@ -7,9 +7,7 @@ export const Header = () => {
     const [showModal, setShowModal] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
-
     const token = localStorage.getItem("token");
-
     const handleLogout = () => {
         localStorage.removeItem("token");
         navigate('/login');
@@ -30,7 +28,10 @@ export const Header = () => {
                             <Link to={'/'}>Home</Link>
                         </h2>
                         <div className="ms-3">
-                            <Link to={'/h/create'}>Create</Link>
+                            
+                            <Link to={
+                                !token ? '/login' : '/h/create'
+                            }>Create</Link>
                         </div>
                     </div>
                     <div>
