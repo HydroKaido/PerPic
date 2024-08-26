@@ -1,6 +1,4 @@
-
 const LogoutModal = ({ onClose, handleLogout }: any) => {
-    
     return ( 
         <>
          <div
@@ -17,5 +15,4 @@ const LogoutModal = ({ onClose, handleLogout }: any) => {
         </>
      );
 }
- 
 export default LogoutModal;

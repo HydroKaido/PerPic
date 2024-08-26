@@ -14,13 +14,13 @@ const authenticateToken = (req, res, next) => {
     if(bearer !== 'Bearer' || !token){
         return res.status(401).json({message: 'Invalid format token'});
     }
-    jwt.verify(token, secretkey, (err, decoded) => {
+    jwt.verify(token, secretkey, (err, user) => {
         //display invalid token
         if(err){
             return res.status(401).json({message: 'Invalid token'})
         }
         // Add the decoded information to the request object
-        req.user = decoded
+        req.user = user
         //goes to next middleware
         next();
     })
