@@ -23,10 +23,7 @@ router.post('/register', async (req, res) => {
         if (emailExist) {
             return res.status(400).json({ error: 'Email already exists' });
         }
-
-        // Hash the password using bcryptjs
         const hashedPassword = await bcrypt.hash(password, 10);
-
         const newUser = await User.create({
             username,
             email,
@@ -42,7 +39,6 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-
         if (!email || !password) {
             return res.status(400).json({ error: 'Please input all fields' });
         }
@@ -53,7 +49,6 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'No user available with this email' });
         }
 
-        // Compare the password using bcryptjs
         const isPasswordMatch = await bcrypt.compare(password, user.password);
 
         if (isPasswordMatch) {

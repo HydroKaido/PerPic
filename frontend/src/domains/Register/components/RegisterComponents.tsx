@@ -9,7 +9,7 @@ const RegisterComponents = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="fixed top-0 flex justify-center items-center left-0 right-0 bottom-0 z-50 bg-black bg-opacity-50">
+        <div className="fixed top-0 flex justify-center items-center left-0 right-0 bottom-0 z-50 bg-[#EEE]">
           <div className="max-w-md w-full space-y-8">
             <div className="bg-white px-10 py-10 rounded border shadow-lg">
               <h2 className="text-center text-[#0039FF] text-4xl font-black mb-10">
