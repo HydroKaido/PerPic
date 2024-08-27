@@ -10,7 +10,7 @@ const PORT = process.env.PORT
 
 const app = express();
 const corsOptions = {
-  origin: 'https://per-pic.vercel.app/',
+  origin: 'https://per-pic.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Authorization,Origin,X-Requested-With,Content-Type,Accept',
 };
