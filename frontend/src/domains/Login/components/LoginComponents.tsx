@@ -1,21 +1,12 @@
 import { useLogin } from "../hooks/useLogin";
-import Icons from "../../../assets/icons/Icons";
+import { Link } from "react-router-dom";
 
-interface Props {
-  onClose: () => void;
-  setShowModalLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  handleChangeAuth: () => void;
-}
-
-const LoginComponents = ({ onClose, setShowModalLogin, handleChangeAuth }: Props) => {
-  const { login, error, handleLogin, handleLoginSubmit } = useLogin(setShowModalLogin);
-  const { IoCloseSharp } = Icons();
-
+const LoginComponents = () => {
+  const { login, error, handleLogin, handleLoginSubmit } = useLogin();
   return (
-    <div className="fixed top-0 flex justify-center items-center left-0 right-0 bottom-0 z-50 bg-black bg-opacity-50" onClick={onClose}>
+    <div className="fixed top-0 flex justify-center items-center left-0 right-0 bottom-0 z-50 bg-[#EEE]">
       <div className="max-w-md w-full space-y-8">
-        <div className="bg-white px-10 py-10 rounded border shadow-lg relative" onClick={(event) => { event.stopPropagation() }}>
-          <IoCloseSharp className="absolute top-3 right-3 text-xl cursor-pointer" onClick={onClose} />
+        <div className="bg-white px-10 py-10 rounded border shadow-lg relative" >
           <h2 className="text-center text-[#0039FF] text-4xl font-black mb-10">
             PerPic
           </h2>
@@ -52,9 +43,8 @@ const LoginComponents = ({ onClose, setShowModalLogin, handleChangeAuth }: Props
               </button>
             </div>
             <div className="mt-10 text-center">
-              <button type="button" className="text-gray-500" onClick={handleChangeAuth}>
-                Don't have an account
-              </button>
+
+              <Link to={'/register'} className="text-gray-500">Don't have an account</Link>
             </div>
           </form>
         </div>

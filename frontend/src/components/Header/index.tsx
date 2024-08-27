@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import LogoutModal from "../LogoutModal";
 import {jwtDecode} from "jwt-decode";
 import { toast } from "react-toastify";
-import LoginPage from "../../domains/Login/pages/LoginPage";
 
 interface Token {
   exp: number;
@@ -11,7 +10,6 @@ interface Token {
 
 export const Header = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showModalLogin, setShowModalLogin] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -57,8 +55,8 @@ export const Header = () => {
               <Link to={"/"}>Home</Link>
             </h2>
             <div className="ms-3">
-              <button onClick={() => setShowModalLogin(true)}>Create</button>
-              {/* <Link to={!token ? "/login" : "/h/create"}>Create</Link> */}
+              
+              <Link to={!token ? "/login" : "/h/create"}>Create</Link>
             </div>
           </div>
           <div>
@@ -80,18 +78,11 @@ export const Header = () => {
             </div>
           ) : (
             <div className="me-3 flex items-center">
-              <button onClick={() => setShowModalLogin(true)} className="border-2 rounded-full px-3 border-gray-500">Login</button>
+              <Link to={'/login'} className="border-2 rounded-full px-3 border-gray-500">Login</Link>
             </div>
           )}
         </div>
       </div>
-      {
-        showModalLogin && (
-          <LoginPage onClose={() => setShowModalLogin(false)}
-          setShowModalLogin={setShowModalLogin}
-          />
-        )
-      }
       {showModal && (
         <LogoutModal
           onClose={() => setShowModal(false)}

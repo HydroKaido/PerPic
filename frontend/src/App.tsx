@@ -1,12 +1,12 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./domains/Login/pages/LoginPage";
 import RegisterPage from "./domains/Register/pages/RegisterPage";
 import ArtGalleryPage from "./domains/ArtGallery/pages/ArtGalleryPage";
 import CreateArtGalleryPage from "./domains/CreateArtGallery/pages/CreateArtGalleryPage";
 import ArtSinglePage from "./domains/ArtSingle/pages/ArtSinglePage";
 import DashboardPage from "./domains/Dashboard/pages/DashboardPage";
 import ErrorPage from "./domains/ErrorPage/pages/ErrorPage";
+import LoginPage from "./domains/Login/pages/LoginPage";
 
 function App() {
   return (

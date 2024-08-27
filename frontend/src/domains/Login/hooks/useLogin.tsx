@@ -9,7 +9,7 @@ interface Login {
   password: string;
 }
 
-export const useLogin = (setShowModalLogin: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const useLogin = () => {
   const [login, setLogin] = useState<Login>({ email: "", password: "" });
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ export const useLogin = (setShowModalLogin: React.Dispatch<React.SetStateAction<
           localStorage.setItem("token", response.data.token);
           navigate("/");
           toast.success("You are now login");
-          setShowModalLogin(false);
         }
       })
       .catch((error) => {
