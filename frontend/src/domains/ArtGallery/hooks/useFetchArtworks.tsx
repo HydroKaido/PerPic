@@ -15,13 +15,11 @@ export const useFetchArtworks = (token: string | null) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    if (!token) return;
     const fetchArtworks = async () => {
       try {
         const response = await api.get("/artwork/all", {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         const shuffledArtworks = shuffleArray(response.data.data);
         setArtworks(shuffledArtworks);
       } catch (error: any) {

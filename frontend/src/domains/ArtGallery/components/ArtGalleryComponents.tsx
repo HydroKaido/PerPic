@@ -14,8 +14,9 @@ const ArtworkGallery = ({ artworks } : ArtworkGalleryProps) => {
   return (
     <ResponsiveMasonry
       columnsCountBreakPoints={{ 300: 2, 500: 3, 700: 4, 900: 5 }}
+      className="w-[95%] mx-auto mt-10"
     >
-      <Masonry gutter="10px">
+      <Masonry gutter="12px" >
         {artworks.map((artwork) => (
           <div key={artwork._id}>
             <Link to={`/${artwork._id}`}>
