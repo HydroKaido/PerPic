@@ -9,13 +9,12 @@ const RegisterComponents = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="h-screen flex items-center justify-center bg-[#EEEEEE]">
+        <div className="fixed top-0 flex justify-center items-center left-0 right-0 bottom-0 z-50 bg-black bg-opacity-50">
           <div className="max-w-md w-full space-y-8">
-            <h2 className="text-center text-[#0039FF] text-4xl font-black">
-              PerPic
-            </h2>
-
             <div className="bg-white px-10 py-10 rounded border shadow-lg">
+              <h2 className="text-center text-[#0039FF] text-4xl font-black mb-10">
+                PerPic
+              </h2>
               <form action="" onSubmit={handleRegisterSubmit}>
                 <div className="mb-8">
                   <h2 className="font-bold mb-1">Username</h2>
@@ -56,6 +55,14 @@ const RegisterComponents = () => {
                 >
                   Register
                 </button>
+                <div className="mt-10 text-center">
+                  <button
+                    type="button"
+                    className="text-gray-500"
+                  >
+                    Already have account? Login
+                  </button>
+                </div>
               </form>
             </div>
           </div>
